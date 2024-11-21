@@ -1,0 +1,25 @@
+
+
+1) Aysnc and non-blocking
+    1) Once thread will receive a request it will not wait for the response and will send the
+    request to thread pool for it to process, and it will continue to take other request.
+
+Publisher ---> one who generates the data.
+Subscriber ---> one who consumes the data and does some processing.
+2) Workflow:
+    1) First subsriber will subscribe to the publisher.
+    2) Publisher will acknowledge and return back a subscription
+    3) Subscriber will request data and will also mention how much data they want
+    4) Publisher will send the data to the subscriber , the number of data sent will be equal to the number of times
+    onNext() method will be executed
+    5) Once the data is sent successfully, onComplete() method will be executed else onError() method will be executed.
+
+3) Types of Publishers:
+    1) Mono: For publishing 1 element or no element.
+    2) Flux: For publishing multiple elements.
+
+
+4) Map and FlatMap:
+map --> will operate on each element synchronously and will return the transformed element
+flatmap --> will operate on each element asynchronously and so it will return mono. Also why mono because it's
+operating at a time asynchronously on one data. Also why a publisher the reason being is for async operation.
