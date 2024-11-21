@@ -23,3 +23,21 @@ Subscriber ---> one who consumes the data and does some processing.
 map --> will operate on each element synchronously and will return the transformed element
 flatmap --> will operate on each element asynchronously and so it will return mono. Also why mono because it's
 operating at a time asynchronously on one data. Also why a publisher the reason being is for async operation.
+
+5) Skip:
+it will skip n elements from the first and will emit rest. If n is more than the no. of elements it will emit nothing
+skipUntil --> it will start emitting elements from the moment the condition becomes true.
+note: doesn't matter if conditions becomes false later
+skipWhile --> it will start emitting elements once the condition becomes false.
+6) delayElements : it will emit data after n seconds
+
+piece of code:
+Flux<String> flux = Flux.just("Hello, World!", "Hi Shourja", "Hello", "ahdhasd", "asdsad")
+             .delayElements(Duration.ofSeconds(1)); // Each element will be emitted after a 1-second delay
+return flux.skip(Duration.ofMillis(2020)); // Elements emitted within the first 2 seconds and 20 milliseconds will be ignored
+
+
+
+7) conact --> It can subscribe to publishers and emit data sequentially
+
+

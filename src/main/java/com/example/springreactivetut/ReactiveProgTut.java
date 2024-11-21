@@ -3,7 +3,9 @@ package com.example.springreactivetut;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ReactiveProgTut {
   private Mono<String> publisher() {
@@ -28,14 +30,47 @@ public class ReactiveProgTut {
 
   private Flux<String> flatMapExample() {
     return Flux.fromIterable(List.of("Hello, World!", "Hi Shourja"))
-            .flatMap(value -> Flux.fromArray(value.split("")))
+            .flatMap(value -> Flux.fromArray(value.split("")).delayElements(Duration.ofSeconds(1)))
             .log();
   }
-  public static void main(String[] args) {
+
+  private Flux<String> skipByCountExample() {
+    return Flux.just("Hello, World!", "Hi Shourja").skip(1);
+  }
+  private Flux<String> skipLastByCountExample() {
+    return Flux.just("Hello, World!", "Hi Shourja","a","b","c").skipLast(2);
+  }
+  private Flux<String> skipByDuration() {
+     Flux<String> flux=Flux.just("Hello, World!", "Hi Shourja" ,"Hello","ahdhasd","asdsad")
+             .delayElements(Duration.ofSeconds(1));
+    return flux.skip(Duration.ofMillis(2020));
+  }
+  private Flux<Integer> skipWhileExample() {
+    // will create items from start <=count
+    Flux<Integer> flux=Flux.range(1,20)
+//            .skipUntil(n->n<5)
+            .skipWhile(n->n>5);
+    return flux;
+  }
+  private Flux<String> concatExample() {
+    // order of the flux matters here
+    return Flux.concat(Flux.just("a","b"),Flux.just("z","Shourja")).log();
+  }
+  private Flux<String> mergeExample() {
+    // order of the flux matters here
+    return Flux.merge(Flux.just("a","b"),Flux.just("z","Shourja")).log();
+  }
+  public static void main(String[] args) throws InterruptedException {
       ReactiveProgTut reactiveProgTut = new ReactiveProgTut();
 //      reactiveProgTut.publisher().subscribe(System.out::println);
 //    reactiveProgTut.publisher1().subscribe(System.out::println);
 //    reactiveProgTut.mapExample().subscribe((value) -> System.out.println("value = " + value));
-    reactiveProgTut.flatMapExample().subscribe((value) -> System.out.println("value = " + value));
+//    reactiveProgTut.flatMapExample().subscribe((value) -> System.out.println("value = " + value));
+//    reactiveProgTut.skipByCountExample().subscribe((value) -> System.out.println("value = " + value));
+//    reactiveProgTut.skipLastByCountExample().subscribe((value) -> System.out.println("value = " + value));
+//    TimeUnit.SECONDS.sleep(40);
+//    reactiveProgTut.skipWhileExample().subscribe(System.out::println);
+//    reactiveProgTut.concatExample().subscribe(System.out::println);
+    reactiveProgTut.mergeExample().subscribe(System.out::println);
   }
 }
