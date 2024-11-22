@@ -38,6 +38,16 @@ return flux.skip(Duration.ofMillis(2020)); // Elements emitted within the first 
 
 
 
-7) conact --> It can subscribe to publishers and emit data sequentially
+7) conact --> It start processing flux in a sequential way.
+8) merge ---> It starts processing all the flux at the same time.
+9) zip --> It starts processing flux in a way let say there are 3 flux , then it will process the 1st element from
+the 1st flux, 1st element from the 2nd flux and 1st element from the third flux and it will combine and give result.
+If any of publisher has completed emitting element, then other will also stop.
+
+10) collectList --> will return items from flux in a list with type as mono. Mono<List>
+
+11) block --> will return the items as list of elements and it's blocking and synchronous. Not recommended to use.
+
+12) buffer --> it will emit element based on mentioned number
 
 

@@ -2,6 +2,8 @@ package com.example.springreactivetut;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
+import reactor.util.function.Tuple3;
 
 import java.time.Duration;
 import java.util.List;
@@ -60,6 +62,19 @@ public class ReactiveProgTut {
     // order of the flux matters here
     return Flux.merge(Flux.just("a","b"),Flux.just("z","Shourja")).log();
   }
+
+  private Flux<Tuple3<Integer,Integer,Integer>> zipExample() {
+    Flux<Integer> flux1 = Flux.range(1,20)
+            .delayElements(Duration.ofSeconds(2));
+    Flux<Integer> flux2 = Flux.range(21,20).delayElements(Duration.ofSeconds(1));
+    Flux<Integer> flux3 = Flux.range(41,20).delayElements(Duration.ofSeconds(3));
+    return Flux.zip(flux1,flux2,flux3);
+  }
+  private Mono<List<Integer>> collectListExample() {
+    Flux<Integer> flux = Flux.range(1,20);
+    return flux.collectList();
+  }
+
   public static void main(String[] args) throws InterruptedException {
       ReactiveProgTut reactiveProgTut = new ReactiveProgTut();
 //      reactiveProgTut.publisher().subscribe(System.out::println);
@@ -71,6 +86,11 @@ public class ReactiveProgTut {
 //    TimeUnit.SECONDS.sleep(40);
 //    reactiveProgTut.skipWhileExample().subscribe(System.out::println);
 //    reactiveProgTut.concatExample().subscribe(System.out::println);
-    reactiveProgTut.mergeExample().subscribe(System.out::println);
+//    reactiveProgTut.mergeExample().subscribe(System.out::println);
+//    reactiveProgTut.zipExample().subscribe(System.out::println);
+//    TimeUnit.SECONDS.sleep(60);
+//    reactiveProgTut.collectListExample().subscribe(System.out::println);
+    List<Integer> list = reactiveProgTut.collectListExample().block();
+    System.out.println("List:"+list);
   }
 }
