@@ -1,12 +1,13 @@
 package com.example.springreactivetut;
 
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuple3;
 
 import java.time.Duration;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class ReactiveProgTut {
@@ -74,7 +75,77 @@ public class ReactiveProgTut {
     Flux<Integer> flux = Flux.range(1,20);
     return flux.collectList();
   }
+  private Flux<List<Integer>> bufferBasedOnNoOfData() {
+    Flux<Integer> flux = Flux.range(1,20);
+    return flux.buffer(3);
+  }
+  private Flux<List<Integer>> bufferBasedOnDuration() {
+    Flux<Integer> flux = Flux.range(1,20)
+            .delayElements(Duration.ofSeconds(1));
+    return flux.buffer(Duration.ofSeconds(3));
+  }
 
+  private Mono<Map<Integer,Integer>> collectMapExample() {
+    Flux<Integer> flux = Flux.range(1,20);
+    return flux.collectMap((n)->n,(n)->n*n);
+  }
+  private Flux<Integer> testDoOnEach() {
+    return Flux.range(1,20).doOnEach(signal->{
+      if(signal.isOnComplete()) {
+        System.out.println("complete");
+        return;
+      }
+      System.out.println("value:"+signal.get());
+    });
+  }
+  private Flux<Integer> testDoOnNext() {
+    return Flux.range(1,20).doOnNext(System.out::println);
+  }
+
+  private Flux<Integer> testDoOnSubscribe() {
+    return Flux.range(1,20).doOnSubscribe(subscription -> System.out.println("subscribed"));
+  }
+  private Flux<Integer> testDoOnCancel() {
+    return Flux.range(1,20).delayElements(Duration.ofSeconds(2))
+            .doOnCancel(()->System.out.println("Cancelled"));
+  }
+  private Flux<Integer> testHandleError() {
+    return Flux.range(1,20).map((d)->{
+      if(d==5) {
+       throw new RuntimeException("Can't square this number");
+      }
+      return d*d;
+    }).onErrorContinue(((throwable, o) -> System.out.println("Got exception:"+throwable.getMessage()+" so" +
+            " can't square this number:"+o)));
+  }
+  private Flux<Integer> testHandleError1() {
+    return Flux.range(1,20).map((d)->{
+      if(d==5) {
+        throw new RuntimeException("Can't square this number");
+      }
+      return d*d;
+    }).onErrorReturn(2)
+            .onErrorReturn(RuntimeException.class,4);
+  }
+  private Flux<Integer> testHandleError2() {
+    return Flux.range(1,20).map((d)->{
+              if(d==5) {
+                throw new RuntimeException("Can't square this number");
+              }
+              return d*d;
+            })
+            .onErrorResume((throwable)->Mono.just(4));
+  }
+
+  private Flux<Integer> testHandleError3() {
+    return Flux.range(1,20).map((d)->{
+              if(d==5) {
+                throw new RuntimeException("Can't square this number");
+              }
+              return d*d;
+            })
+            .onErrorMap((throwable)->new Exception(throwable.getMessage()));
+  }
   public static void main(String[] args) throws InterruptedException {
       ReactiveProgTut reactiveProgTut = new ReactiveProgTut();
 //      reactiveProgTut.publisher().subscribe(System.out::println);
@@ -90,7 +161,17 @@ public class ReactiveProgTut {
 //    reactiveProgTut.zipExample().subscribe(System.out::println);
 //    TimeUnit.SECONDS.sleep(60);
 //    reactiveProgTut.collectListExample().subscribe(System.out::println);
-    List<Integer> list = reactiveProgTut.collectListExample().block();
-    System.out.println("List:"+list);
+//    List<Integer> list = reactiveProgTut.collectListExample().block();
+//    System.out.println("List:"+list);
+//    reactiveProgTut.bufferBasedOnDuration().subscribe(System.out::println);
+//    TimeUnit.SECONDS.sleep(40);
+//    reactiveProgTut.collectMapExample().subscribe(System.out::println);
+//      reactiveProgTut.testDoOnNext().subscribe();
+//    reactiveProgTut.testDoOnSubscribe().subscribe(System.out::println);
+//    reactiveProgTut.testDoOnSubscribe().subscribe(System.out::println);
+//    Disposable disposable = reactiveProgTut.testDoOnCancel().subscribe(System.out::println);
+//    TimeUnit.SECONDS.sleep(5);
+//    disposable.dispose();
+      reactiveProgTut.testHandleError3().subscribe(System.out::println);
   }
 }

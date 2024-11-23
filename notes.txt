@@ -7,7 +7,7 @@
 Publisher ---> one who generates the data.
 Subscriber ---> one who consumes the data and does some processing.
 2) Workflow:
-    1) First subsriber will subscribe to the publisher.
+    1) First subscriber will subscribe to the publisher.
     2) Publisher will acknowledge and return back a subscription
     3) Subscriber will request data and will also mention how much data they want
     4) Publisher will send the data to the subscriber , the number of data sent will be equal to the number of times
@@ -38,7 +38,7 @@ return flux.skip(Duration.ofMillis(2020)); // Elements emitted within the first 
 
 
 
-7) conact --> It start processing flux in a sequential way.
+7) concat --> It start processing flux in a sequential way.
 8) merge ---> It starts processing all the flux at the same time.
 9) zip --> It starts processing flux in a way let say there are 3 flux , then it will process the 1st element from
 the 1st flux, 1st element from the 2nd flux and 1st element from the third flux and it will combine and give result.
@@ -48,6 +48,23 @@ If any of publisher has completed emitting element, then other will also stop.
 
 11) block --> will return the items as list of elements and it's blocking and synchronous. Not recommended to use.
 
-12) buffer --> it will emit element based on mentioned number
+12) buffer --> it will emit element at a time based on mentioned number or duration
 
+13) doOnEach --> with this method we can do something based on signal, like do something based on onNext() , onSubscribe()
+something like that
+
+14) doOnNext --> with this method we can do something when onNext signal will be executed
+
+15) doOnCancel --> with this method we can cancel a subscription since we might have some time constraint and
+can't process all entities from flux
+
+16) onErrorContinue --> This method will continue on processing other elements even if some exception occurred while processing
+some elements
+
+17) onErrorReturn --> This method would stop processing of the flux if some exception occurs and will return a special value,
+a special value set by us. We can also return values based on the type of exception.
+
+18) onErrorResume --> This method will start processing a new publisher (Mono/Flux) incase exception happens
+
+19) onErrorMap --> This method map a specific exception to another exception
 
