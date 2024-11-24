@@ -66,7 +66,8 @@ some elements
 17) onErrorReturn --> This method would stop processing of the flux if some exception occurs and will return a special value,
 a special value set by us. We can also return values based on the type of exception.
 
-18) onErrorResume --> This method will start processing a new publisher (Mono/Flux) incase exception happens
+18) onErrorResume --> This method will start processing a new publisher (Mono/Flux) in case exception happens
 
 19) onErrorMap --> This method map a specific exception to another exception
+
 

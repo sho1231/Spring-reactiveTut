@@ -1,0 +1,8 @@
+Difference between concatMap and flapMap?
+both are literally same but concat map preserves the order of the flux
+
+transform --> It takes a type as input and we can define some operation as well it's return type
+
+defaultIfEmpty --> We can set a default value to be emitted when nothing is there to be emitted
+
+switchIfEmpty --> We can emit a different set of values when nothing is there to be emitted

@@ -23,7 +23,7 @@ public class ReactiveProgTut {
     // log method will display the process of data going through the subscription
 //    return Flux.just("Hello, World!","Hi Shourja").log();
     // fromIterable method will take a list of values and return a Flux
-      return Flux.fromIterable(List.of("Hello, World!","Hi Shourja")).log();
+      return Flux.fromIterable(List.of("Hello, World!","Hi Shourja", "Hi Shourja")).log();
   }
   private Flux<String> mapExample() {
     return Flux.fromIterable(List.of("Hello, World!","Hi Shourja"))
@@ -172,6 +172,6 @@ public class ReactiveProgTut {
 //    Disposable disposable = reactiveProgTut.testDoOnCancel().subscribe(System.out::println);
 //    TimeUnit.SECONDS.sleep(5);
 //    disposable.dispose();
-      reactiveProgTut.testHandleError3().subscribe(System.out::println);
+//      reactiveProgTut.testHandleError3().subscribe(System.out::println);
   }
 }

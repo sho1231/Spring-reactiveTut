@@ -10,4 +10,6 @@ class SpringreactivetutApplicationTests {
 	void contextLoads() {
 	}
 
+	private Flux<String>
+
 }
