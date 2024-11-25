@@ -56,6 +56,8 @@ something like that
 
 14) doOnNext --> with this method we can do something when onNext signal will be executed
 
+15) blockLast() --> same experience as Thread.sleep() and subscribe()
+
 15) doOnCancel --> with this method we can cancel a subscription since we might have some time constraint and
 can't process all entities from flux
 
@@ -68,6 +70,11 @@ a special value set by us. We can also return values based on the type of except
 18) onErrorResume --> This method will start processing a new publisher (Mono/Flux) in case exception happens
 
 19) onErrorMap --> This method map a specific exception to another exception
+
+20) backPressure --> two ways are there: either we can drop request when subscriber cannot handle incoming request
+                    or we can store the extra requests in a buffer and those will be emitted accordingly.
+                    The 2nd way can also lead to data loss since in some case the buffer might be overflown
+                    so we have drop either the oldest or latest request from the buffer
 
 mongodb+srv://sho121:RpEARZfqwuFwxsBz@cluster0-shard-00-00.vxuzi.mongodb.net/?ssl=true&replicaSet=atlas-rtz9yp-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0
 
