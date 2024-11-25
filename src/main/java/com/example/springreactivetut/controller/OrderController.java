@@ -44,7 +44,7 @@ public class OrderController {
     }
 
     @GetMapping("/generate-report/user/{userId}")
-    public Flux<Map<String,Double>> generateReportForUser(@PathVariable String userId) {
+    public Mono<Map<String,Double>> generateReportForUser(@PathVariable String userId) {
         Criteria criteria = Criteria.where("customerId").is(userId);
         return reactiveMongoTemplate.find(Query.query(criteria),Order.class)
                 .map((c)->{
@@ -53,6 +53,6 @@ public class OrderController {
                     result.put("discount" , c.getDiscount());
                     result.put("revenue", c.getTotal()-c.getDiscount());
                     return result;
-                });
+                }).collectList().map(d->d.get(0));
     }
 }
