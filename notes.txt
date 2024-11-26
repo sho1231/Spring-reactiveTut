@@ -76,5 +76,10 @@ a special value set by us. We can also return values based on the type of except
                     The 2nd way can also lead to data loss since in some case the buffer might be overflown
                     so we have drop either the oldest or latest request from the buffer
 
+
+
+21) defer() --> it will instantiate the publisher on every subscribe call
+
+
 mongodb+srv://sho121:RpEARZfqwuFwxsBz@cluster0-shard-00-00.vxuzi.mongodb.net/?ssl=true&replicaSet=atlas-rtz9yp-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0
 
