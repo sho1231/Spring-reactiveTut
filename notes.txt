@@ -17,7 +17,7 @@ Subscriber ---> one who consumes the data and does some processing.
 
 3) Types of Publishers:
     1) Mono: For publishing 1 element or no element.
-    2) Flux: For publishing multiple elements.
+    2) Flux: For publishing no or multiple elements.
 
 
 4) Map and FlatMap:
