@@ -146,6 +146,12 @@ public class ReactiveProgTut {
             })
             .onErrorMap((throwable)->new Exception(throwable.getMessage()));
   }
+
+  private Mono<Long> thenReturnExample() {
+
+    Mono<Long> mono = Mono.just(System.currentTimeMillis());
+    return mono.flatMap(l->Mono.just(l).thenReturn(5l));
+  }
   public static void main(String[] args) throws InterruptedException {
       ReactiveProgTut reactiveProgTut = new ReactiveProgTut();
 //      reactiveProgTut.publisher().subscribe(System.out::println);
@@ -173,5 +179,6 @@ public class ReactiveProgTut {
 //    TimeUnit.SECONDS.sleep(5);
 //    disposable.dispose();
 //      reactiveProgTut.testHandleError3().subscribe(System.out::println);
+    reactiveProgTut.thenReturnExample().subscribe(System.out::println);
   }
 }

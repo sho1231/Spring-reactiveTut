@@ -80,6 +80,7 @@ a special value set by us. We can also return values based on the type of except
 
 21) defer() --> it will instantiate the publisher on every subscribe call
 
+22) thenReturn () --> help us to return a specific value irrespective of the previous value
 
 mongodb+srv://sho121:RpEARZfqwuFwxsBz@cluster0-shard-00-00.vxuzi.mongodb.net/?ssl=true&replicaSet=atlas-rtz9yp-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0
 
