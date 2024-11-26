@@ -152,6 +152,7 @@ public class ReactiveProgTut {
     Mono<Long> mono = Mono.just(System.currentTimeMillis());
     return mono.flatMap(l->Mono.just(l).thenReturn(5l));
   }
+
   public static void main(String[] args) throws InterruptedException {
       ReactiveProgTut reactiveProgTut = new ReactiveProgTut();
 //      reactiveProgTut.publisher().subscribe(System.out::println);

@@ -4,6 +4,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -38,15 +39,26 @@ public class DailyCodeBuffer {
         Function<Flux<String>,Flux<String>> filterFunction = data -> data.filter(words->words.length()==4);
         return Flux.just("Wor","Acd","a").transform(filterFunction).defaultIfEmpty("Not present");
     }
+    private String generateString() {
+        System.out.println("generating");
+        return "abcd ab";
+    }
+    private String generateString2() {
+        System.out.println("generating123");
+        return "wass ab";
+    }
     private Flux<String> exampleSwitchIfEmpty() {
         Function<Flux<String>,Flux<String>> filterFunction = data -> data.filter(words->words.length()==4);
-        return Flux.just("W","d","a").transform(filterFunction).switchIfEmpty(Flux.just(
-                "abcd","ab"
-        ).transform(filterFunction));
+        return Flux.fromIterable(Arrays.stream(generateString2().split(" ")).toList()).transform(filterFunction).switchIfEmpty(
+                Flux.defer(()->{
+                   return Flux.fromIterable(
+                            Arrays.stream(generateString().split(" ")).toList());
+                })
+        ).map(String::toUpperCase);
     }
     private Flux<String> exampleSwitchIfEmptyComplex() {
         Function<Flux<String>,Flux<String>> filterFunction = data -> data.filter(words->words.length()==4);
-        return Flux.just("W","d","a").transform(filterFunction).switchIfEmpty(Flux.just(
+        return Flux.just("Wass","d","a").transform(filterFunction).switchIfEmpty(Flux.just(
                 "abc","ab"
         ).transform(filterFunction).defaultIfEmpty("test"));
     }
