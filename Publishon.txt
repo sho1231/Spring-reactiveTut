@@ -1,0 +1,20 @@
+https://www.youtube.com/watch?v=E7vOhHZkhE4
+
+Reactor operators runs on the thread which invokes onNext
+
+time related operators like delayElement changes the execution context that they will continue the execution on a
+different thread than the caller thread. In most cases caller thread is main thread
+
+
+difference between publishOn And subscribeOn?
+publishOn will change the execution context from where it's being chained
+subscribeOn will change the execution context from the very first irrespective of the position from where it's
+being called.
+
+In subscribeOn if there are multiple schedulers, then the scheduler at first will decide the execution context
+throughout no other scheduler will have any affect
+
+
+runsOn:
+will divide the flux and will emit in different thread
+
