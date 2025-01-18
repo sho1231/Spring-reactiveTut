@@ -84,3 +84,9 @@ a special value set by us. We can also return values based on the type of except
 
 mongodb+srv://sho121:RpEARZfqwuFwxsBz@cluster0-shard-00-00.vxuzi.mongodb.net/?ssl=true&replicaSet=atlas-rtz9yp-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0
 
+23) then() -->then ignores what is the output of the preceding operation and executes what needs to be done after the operation is successfully completed
+
+24) when() --> same as zip but does not return any result i.e: returns Mono<Void> and also
+it will operate on all the elements on each publisher irrespective of whether one of publisher
+has less than the other
+

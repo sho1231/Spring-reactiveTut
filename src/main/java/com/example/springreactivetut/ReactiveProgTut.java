@@ -180,6 +180,10 @@ public class ReactiveProgTut {
 //    TimeUnit.SECONDS.sleep(5);
 //    disposable.dispose();
 //      reactiveProgTut.testHandleError3().subscribe(System.out::println);
-    reactiveProgTut.thenReturnExample().subscribe(System.out::println);
+//    reactiveProgTut.thenReturnExample().subscribe(System.out::println);
+    Mono.just(2).then(Mono.just(2).map(d->{
+      System.out.println("d:"+d);
+      return d+2;
+    })).subscribe();
   }
 }
